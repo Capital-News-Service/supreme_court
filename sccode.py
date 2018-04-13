@@ -35,6 +35,3 @@ def sendTweet(content):
         api.update_status(content)
     except tweepy.error.TweepError:
         pass
-
-tweet = "supreme court"
-buildTweet(tweet)
