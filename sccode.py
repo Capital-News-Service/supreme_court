@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Apr 12 10:56:54 2018
-
-@author: gmkanik
-"""
-
 import json
 import tweepy
 
@@ -35,3 +27,11 @@ def sendTweet(content):
         api.update_status(content)
     except tweepy.error.TweepError:
         pass
+    
+
+#opens and reads scapikey.json
+scapikey={}
+with open("sckeys/scapikey.json") as file:
+    scapikey = json.loads(file.read())
+#authenticate and calls api to print text
+sc_api_key = scapikey["sc_api_key"]
