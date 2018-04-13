@@ -9,7 +9,7 @@ Created on Thu Apr 12 10:56:54 2018
 import json
 import tweepy
 
-#opens and reads mvkey.json
+#opens and reads sckey.json
 sckey={}
 with open("sckeys/sckey.json") as file:
     sckey = json.loads(file.read())
@@ -25,8 +25,6 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 # Store access keys in a way to send to Twitter
 api = tweepy.API(auth)
-tweet = "supreme court"
-buildTweet(tweet)
 
 def buildTweet(argument1):
     tweet = "supreme court"
@@ -37,3 +35,6 @@ def sendTweet(content):
         api.update_status(content)
     except tweepy.error.TweepError:
         pass
+
+tweet = "supreme court"
+buildTweet(tweet)
