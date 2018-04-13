@@ -1,5 +1,7 @@
 import json
 import tweepy
+import requests
+import pandas as pd
 
 #opens and reads sckey.json
 sckey={}
@@ -35,3 +37,11 @@ with open("sckeys/scapikey.json") as file:
     scapikey = json.loads(file.read())
 #authenticate and calls api to print text
 sc_api_key = scapikey["sc_api_key"]
+
+#calls court listener api and puts results into json and dataframe
+urlcourt = 'https://www.courtlistener.com/api/rest/v3/clusters/?court_id=scotus'
+headers = {'SC-API-KEY': sc_api_key}
+responsecourt = requests.get(urlcourt, headers=headers)
+jsoncourt = responsecourt.json()
+datacourt = jsoncourt.get('results')
+courtdf = pd.DataFrame(datacourt)

@@ -54,11 +54,32 @@ buildTweet(tweet)
 ```
   
 #### Version 2 
-Print out in console all recent opinions of the Supreme Court as json
+Put all recent opinions of the Supreme Court in a dataframe
 * Get Court Listener API key
 * Store in scapikey.json file
 * Call in authentication information from scapikey.json
 * Import requests
-* Use requests.get to call URL: https://www.courtlistener.com/api/rest/v3/clusters/
+* Use requests.get to call URL: https://www.courtlistener.com/api/rest/v3/clusters/?court_id=scotus 
 * Headers for authenticating scapikey.json
-* Print json as string in console to test
+* Put results of json into dataframe
+```
+import requests
+import pandas as pd
+
+#opens and reads scapikey.json
+scapikey={}
+with open("sckeys/scapikey.json") as file:
+    scapikey = json.loads(file.read())
+#authenticate and calls api to print text
+sc_api_key = scapikey["sc_api_key"]
+
+#calls court listener api and puts results into json and dataframe
+urlcourt = 'https://www.courtlistener.com/api/rest/v3/clusters/?court_id=scotus'
+headers = {'SC-API-KEY': sc_api_key}
+responsecourt = requests.get(urlcourt, headers=headers)
+jsoncourt = responsecourt.json()
+datacourt = jsoncourt.get('results')
+courtdf = pd.DataFrame(datacourt)
+```
+
+#### Version 3
