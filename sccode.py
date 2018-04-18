@@ -39,9 +39,11 @@ with open("sckeys/scapikey.json") as file:
 sc_api_key = scapikey["sc_api_key"]
 
 #calls court listener api and puts results into json and dataframe
-urlcourt = 'https://www.courtlistener.com/api/rest/v3/opinions/?court_id=scotus'
+urlcourt = 'https://www.courtlistener.com/api/rest/v3/opinions/?cluster__docket__court__id=scotus'
 headers = {'SC-API-KEY': sc_api_key}
 responsecourt = requests.get(urlcourt, headers=headers)
 jsoncourt = responsecourt.json()
 datacourt = jsoncourt.get('results')
 courtdf = pd.DataFrame(datacourt)
+
+courtdf.to_csv('courtdf.csv', sep=',')
