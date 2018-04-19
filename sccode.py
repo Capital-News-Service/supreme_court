@@ -45,5 +45,3 @@ responsecourt = requests.get(urlcourt, headers=headers)
 jsoncourt = responsecourt.json()
 datacourt = jsoncourt.get('results')
 courtdf = pd.DataFrame(datacourt)
-
-courtdf.to_csv('courtdf.csv', sep=',')
