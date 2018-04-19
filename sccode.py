@@ -54,3 +54,4 @@ for c in datacourt:
 
 
 #https://stackoverflow.com/questions/17098675/searching-text-in-a-pdf-using-python
+#https://conda.io/docs/user-guide/tasks/manage-pkgs.html
