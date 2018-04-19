@@ -2,6 +2,7 @@ import json
 import tweepy
 import requests
 import pandas as pd
+import textract
 
 #opens and reads sckey.json
 sckey={}
@@ -45,3 +46,11 @@ responsecourt = requests.get(urlcourt, headers=headers)
 jsoncourt = responsecourt.json()
 datacourt = jsoncourt.get('results')
 courtdf = pd.DataFrame(datacourt)
+
+for c in datacourt:
+    urlpdf = c['download_url']
+    getpdf = requests.get(urlpdf)
+    text = textract.process(getpdf)
+
+
+#https://stackoverflow.com/questions/17098675/searching-text-in-a-pdf-using-python
