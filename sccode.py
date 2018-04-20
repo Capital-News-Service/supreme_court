@@ -46,14 +46,10 @@ jsoncourt = responsecourt.json()
 datacourt = jsoncourt.get('results')
 courtdf = pd.DataFrame(datacourt)
 
-money = ["money"] 
+money = ["Maryland"] 
 for y in money:
     moneysearch = courtdf[courtdf['plain_text'].str.contains(y)]
     if (len(moneysearch) > 0):
         irow = moneysearch.iterrows()
         for j in irow:
             print(j[1]['absolute_url'])
-
-
-
-#https://stackoverflow.com/questions/17098675/searching-text-in-a-pdf-using-python
