@@ -2,7 +2,7 @@ import json
 import tweepy
 import requests
 import pandas as pd
-import textract
+
 
 #opens and reads sckey.json
 sckey={}
@@ -22,7 +22,7 @@ auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth)
 
 def buildTweet(argument1):
-    tweet = "supreme court"
+    tweet = "supreme court"      
     sendTweet(tweet)
 
 def sendTweet(content):
@@ -31,7 +31,6 @@ def sendTweet(content):
     except tweepy.error.TweepError:
         pass
     
-
 #opens and reads scapikey.json
 scapikey={}
 with open("sckeys/scapikey.json") as file:
@@ -47,11 +46,14 @@ jsoncourt = responsecourt.json()
 datacourt = jsoncourt.get('results')
 courtdf = pd.DataFrame(datacourt)
 
-for c in datacourt:
-    urlpdf = c['download_url']
-    getpdf = requests.get(urlpdf)
-    text = textract.process(getpdf)
+money = ["money"] 
+for y in money:
+    moneysearch = courtdf[courtdf['plain_text'].str.contains(y)]
+    if (len(moneysearch) > 0):
+        irow = moneysearch.iterrows()
+        for j in irow:
+            print(j[1]['absolute_url'])
+
 
 
 #https://stackoverflow.com/questions/17098675/searching-text-in-a-pdf-using-python
-#https://conda.io/docs/user-guide/tasks/manage-pkgs.html
