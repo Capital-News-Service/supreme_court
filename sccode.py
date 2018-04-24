@@ -2,6 +2,8 @@ import json
 import tweepy
 import requests
 import pandas as pd
+import numpy as np
+import datetime
 
 
 #opens and reads sckey.json
@@ -46,10 +48,28 @@ jsoncourt = responsecourt.json()
 datacourt = jsoncourt.get('results')
 courtdf = pd.DataFrame(datacourt)
 
-money = ["Maryland"] 
-for y in money:
-    moneysearch = courtdf[courtdf['plain_text'].str.contains(y)]
-    if (len(moneysearch) > 0):
-        irow = moneysearch.iterrows()
+#import today's date
+def getDate():
+    now = datetime.datetime.now()
+    date = now.strftime('%Y-%m-%d')
+    return date
+
+#search for md locations only for today
+date = "2018-04-17"
+courtdf = courtdf.replace(np.nan, '', regex=True)
+scdate = courtdf[courtdf['date_created'].str.contains(date)]
+if (len(scdate) > 0):
+    irow = scdate.iterrows()
+    for i in irow:
+        print(i[1]['date_created'])
+
+scterms = []
+with open('scterms.txt', 'r') as s:
+    scterms = s.readlines()
+
+for t in scterms:
+    search = courtdf[courtdf['plain_text'].str.contains(t)]
+    if (len(search) > 0):
+        irow = search.iterrows()
         for j in irow:
             print(j[1]['absolute_url'])
