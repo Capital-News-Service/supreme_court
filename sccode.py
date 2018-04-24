@@ -5,7 +5,6 @@ import pandas as pd
 import numpy as np
 import datetime
 
-
 #opens and reads sckey.json
 sckey={}
 with open("sckeys/sckey.json") as file:
@@ -49,20 +48,21 @@ datacourt = jsoncourt.get('results')
 courtdf = pd.DataFrame(datacourt)
 
 #import today's date
-def getDate():
-    now = datetime.datetime.now()
-    date = now.strftime('%Y-%m-%d')
-    return date
+#def getDate():
+#    now = datetime.datetime.now()
+#    date = now.strftime('%Y-%m-%d')
+#    return date
 
 #search for md locations only for today
-date = "2018-04-17"
-courtdf = courtdf.replace(np.nan, '', regex=True)
-scdate = courtdf[courtdf['date_created'].str.contains(date)]
-if (len(scdate) > 0):
-    irow = scdate.iterrows()
-    for i in irow:
-        print(i[1]['date_created'])
+#date = "2018-04-17"
+#courtdf = courtdf.replace(np.nan, '', regex=True)
+#scdate = courtdf[courtdf['date_created'].str.contains(date)]
+#if (len(scdate) > 0):
+#    irow = scdate.iterrows()
+#    for i in irow:
+#        print(i[1]['date_created'])
 
+#import list of Maryland terms
 scterms = []
 with open('scterms.txt', 'r') as s:
     scterms = s.readlines()
