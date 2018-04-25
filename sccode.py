@@ -3,7 +3,7 @@ import tweepy
 import requests
 import pandas as pd
 import numpy as np
-import datetime
+from datetime import datetime, timedelta
 
 #opens and reads sckey.json
 sckey={}
@@ -47,20 +47,21 @@ jsoncourt = responsecourt.json()
 datacourt = jsoncourt.get('results')
 courtdf = pd.DataFrame(datacourt)
 
-#import today's date
-#def getDate():
-#    now = datetime.datetime.now()
-#    date = now.strftime('%Y-%m-%d')
-#    return date
+#import yesterday's date
+def getDate():
+    yesterday = datetime.now() - timedelta(days=1)
+    date = yesterday.strftime('%Y-%m-%d')
+    print(date)
+    return date
 
 #search for md locations only for today
-#date = "2018-04-17"
-#courtdf = courtdf.replace(np.nan, '', regex=True)
-#scdate = courtdf[courtdf['date_created'].str.contains(date)]
-#if (len(scdate) > 0):
-#    irow = scdate.iterrows()
-#    for i in irow:
-#        print(i[1]['date_created'])
+date = getDate()
+courtdf = courtdf.replace(np.nan, '', regex=True)
+scdate = courtdf[courtdf['date_created'].str.contains(date)]
+if (len(scdate) > 0):
+    irow = scdate.iterrows()
+    for i in irow:
+        print(i[1]['date_created'])
 
 #import list of Maryland terms
 scterms = []
