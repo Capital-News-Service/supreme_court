@@ -55,13 +55,13 @@ def getDate():
     return date
 
 #search for md locations only for today
-date = getDate()
-courtdf = courtdf.replace(np.nan, '', regex=True)
-scdate = courtdf[courtdf['date_created'].str.contains(date)]
-if (len(scdate) > 0):
-    irow = scdate.iterrows()
-    for i in irow:
-        print(i[1]['date_created'])
+#date = getDate()
+#courtdf = courtdf.replace(np.nan, '', regex=True)
+#scdate = courtdf[courtdf['date_created'].str.contains(date)]
+#if (len(scdate) > 0):
+#    irow = scdate.iterrows()
+#    for i in irow:
+#        print(i[1]['date_created'])
 
 #import list of Maryland terms
 scterms = []
@@ -70,7 +70,8 @@ with open('scterms.txt', 'r') as s:
 
 for t in scterms:
     search = courtdf[courtdf['plain_text'].str.contains(t)]
+    print(t)
     if (len(search) > 0):
         irow = search.iterrows()
-        for j in irow:
-            print(j[1]['absolute_url'])
+        for r in irow:
+            print(r[1]['absolute_url'])
