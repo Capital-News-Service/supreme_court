@@ -83,3 +83,40 @@ courtdf = pd.DataFrame(datacourt)
 ```
 
 #### Version 3
+* Iterate over column plain_text to find text file of list of words
+* If found, print out event in console
+```
+#import list of Maryland terms
+scterms = []
+with open('scterms.txt', 'r') as s:
+    scterms = s.read().splitlines()
+
+for t in scterms:
+    search = courtdf[courtdf['plain_text'].str.contains(t)]
+    print(t)
+    if (len(search) > 0):
+        irow = search.iterrows()
+        for r in irow:
+            print(r[1]['absolute_url'])
+```
+#### Version 4
+* Get yesterday's date
+* Search for date in data frame
+* For that day, search for list of words in plain_text by iterating over rows
+* If found, print out event in console
+```
+def getDate():
+    yesterday = datetime.now() - timedelta(days=1)
+    date = yesterday.strftime('%Y-%m-%d')
+    print(date)
+    return date
+
+#search for md locations only for today
+date = getDate()
+courtdf = courtdf.replace(np.nan, '', regex=True)
+scdate = courtdf[courtdf['date_created'].str.contains(date)]
+if (len(scdate) > 0):
+    irow = scdate.iterrows()
+    for i in irow:
+        print(i[1]['date_created'])
+```            

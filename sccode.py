@@ -66,7 +66,7 @@ def getDate():
 #import list of Maryland terms
 scterms = []
 with open('scterms.txt', 'r') as s:
-    scterms = s.readlines()
+    scterms = s.read().splitlines()
 
 for t in scterms:
     search = courtdf[courtdf['plain_text'].str.contains(t)]
