@@ -22,8 +22,8 @@ auth.set_access_token(access_token, access_token_secret)
 # Store access keys in a way to send to Twitter
 api = tweepy.API(auth)
 
-def buildTweet(argument1):
-    tweet = "supreme court"      
+def buildTweet(argument1, argument2):
+    tweet = "The Supreme Court released an opinion on " + argument1 + " that relates to Maryland. To read the full text, visit " + argument2 + "."   
     sendTweet(tweet)
 
 def sendTweet(content):
@@ -54,24 +54,25 @@ def getDate():
     print(date)
     return date
 
-#search for md locations only for today
-#date = getDate()
-#courtdf = courtdf.replace(np.nan, '', regex=True)
-#scdate = courtdf[courtdf['date_created'].str.contains(date)]
-#if (len(scdate) > 0):
-#    irow = scdate.iterrows()
-#    for i in irow:
-#        print(i[1]['date_created'])
-
 #import list of Maryland terms
 scterms = []
 with open('scterms.txt', 'r') as s:
     scterms = s.read().splitlines()
+    
+#search for md locations only for today
+date = getDate()
+courtdf = courtdf.replace(np.nan, '', regex=True)
+scdate = courtdf[courtdf['date_created'].str.contains(date)]
+if (len(scdate) > 0):
+    irow = scdate.iterrows()
+    for i in irow:
+        print(i[1]['date_created'])
 
 for t in scterms:
-    search = courtdf[courtdf['plain_text'].str.contains(t)]
+    search = scdate[scdate['plain_text'].str.contains(t)]
     print(t)
     if (len(search) > 0):
         irow = search.iterrows()
         for r in irow:
             print(r[1]['absolute_url'])
+            buildTweet(date, r[1]['download_url'])
