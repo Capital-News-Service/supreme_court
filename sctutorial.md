@@ -1,6 +1,6 @@
 ## Supreme Court
 **Problem:** At the Supreme Court, what cases are related to Maryland?
-**Solution:** Search Supreme Court agenda for Maryland.
+**Solution:** Search Supreme Court opinions for Maryland.
 
 #### Version 1
 Sends out a tweet when the program runs to a Twitter account.
@@ -101,8 +101,7 @@ for t in scterms:
 ```
 #### Version 4
 * Get yesterday's date
-* Search for date in data frame
-* For that day, search for list of words in plain_text by iterating over rows
+* Search for date in data frame under date_created by iterating over rows
 * If found, print out event in console
 ```
 def getDate():
@@ -120,3 +119,21 @@ if (len(scdate) > 0):
     for i in irow:
         print(i[1]['date_created'])
 ```            
+#### Version 5
+* Create text file of list of terms related to Maryland
+* Search for list of terms in recent opinions in plain_text by iterating over rows
+* If found, tweet out date
+```
+#import list of Maryland terms
+scterms = []
+with open('scterms.txt', 'r') as s:
+    scterms = s.read().splitlines()
+    
+for t in scterms:
+    search = scdate[scdate['plain_text'].str.contains(t)]
+    if (len(search) > 0):
+        irow = search.iterrows()
+        for r in irow:
+            print(r[1]['absolute_url'])
+            buildTweet(date, r[1]['download_url'])
+```
