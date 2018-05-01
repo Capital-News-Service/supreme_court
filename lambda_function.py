@@ -67,7 +67,7 @@ def lambda_handler(event, context):
         search = scdate[scdate['plain_text'].str.contains(t)]
         if (len(search) > 0):
             irow = search.iterrows()
-                for r in irow:
-                    print(r[1]['absolute_url'])
-                    buildTweet(date, r[1]['download_url'])
+            for r in irow:
+                print(r[1]['absolute_url'])
+                buildTweet(date, r[1]['download_url'])
     return 'Hello from Lambda'
