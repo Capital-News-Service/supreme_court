@@ -27,10 +27,7 @@ def buildTweet(argument1, argument2):
     sendTweet(tweet)
 
 def sendTweet(content):
-    try:
-        api.update_status(content)
-    except tweepy.error.TweepError:
-        pass
+    api.update_status(content)
     
 #opens and reads scapikey.json
 scapikey={}
@@ -51,7 +48,6 @@ courtdf = pd.DataFrame(datacourt)
 def getDate():
     yesterday = datetime.now() - timedelta(days=1)
     date = yesterday.strftime('%Y-%m-%d')
-    print(date)
     return date
 
 #import list of Maryland terms
@@ -65,12 +61,9 @@ courtdf = courtdf.replace(np.nan, '', regex=True)
 scdate = courtdf[courtdf['date_created'].str.contains(date)]
 if (len(scdate) > 0):
     irow = scdate.iterrows()
-    for i in irow:
-        print(i[1]['date_created'])
 
 for t in scterms:
     search = scdate[scdate['plain_text'].str.contains(t)]
-    print(t)
     if (len(search) > 0):
         irow = search.iterrows()
         for r in irow:
