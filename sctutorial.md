@@ -65,6 +65,7 @@ Put all recent opinions of the Supreme Court in a dataframe
 ```
 import requests
 import pandas as pd
+import numpy as np
 
 #opens and reads scapikey.json
 scapikey={}
@@ -81,29 +82,13 @@ jsoncourt = responsecourt.json()
 datacourt = jsoncourt.get('results')
 courtdf = pd.DataFrame(datacourt)
 ```
-
 #### Version 3
-* Iterate over column plain_text to find text file of list of words
-* If found, print out event in console
-```
-#import list of Maryland terms
-scterms = []
-with open('scterms.txt', 'r') as s:
-    scterms = s.read().splitlines()
-
-for t in scterms:
-    search = courtdf[courtdf['plain_text'].str.contains(t)]
-    print(t)
-    if (len(search) > 0):
-        irow = search.iterrows()
-        for r in irow:
-            print(r[1]['absolute_url'])
-```
-#### Version 4
 * Get yesterday's date
 * Search for date in data frame under date_created by iterating over rows
 * If found, print out event in console
 ```
+from datetime import datetime, timedelta
+
 def getDate():
     yesterday = datetime.now() - timedelta(days=1)
     date = yesterday.strftime('%Y-%m-%d')
@@ -119,7 +104,7 @@ if (len(scdate) > 0):
     for i in irow:
         print(i[1]['date_created'])
 ```            
-#### Version 5
+#### Version 4
 * Create text file of list of terms related to Maryland
 * Search for list of terms in recent opinions in plain_text by iterating over rows
 * If found, tweet out date
